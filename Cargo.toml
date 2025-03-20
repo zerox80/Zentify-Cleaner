@@ -1,0 +1,12 @@
+[package]
+name = "rustyclean"
+version = "0.1.0"
+edition = "2021"
+authors = ["RustyClean Team"]
+description = "Ein Windows-Optimierungstool zur Systemleistungsverbesserung"
+
+[dependencies]
+iced = { version = "0.10.0", features = ["canvas", "tokio", "image"] }
+sysinfo = "0.28.4"
+once_cell = "1.18.0"
+# Hier können später Abhängigkeiten hinzugefügt werden
