@@ -11,13 +11,31 @@ RustyClean bietet ein modulares Konzept, das es ermöglicht, verschiedene Aspekt
 ### Systemreinigung
 
 - **Temporäre Dateien löschen:**  
-  ✅ Rekursive Suche und Entfernung von temporären Dateien in `%TEMP%`, `C:\Windows\Temp` und weiteren benutzerdefinierten Ordnern.
+  ✅ Erweiterte rekursive Suche und Entfernung temporärer Dateien aus:
+  - Windows-Temp-Verzeichnissen (`%TEMP%`, `C:\Windows\Temp`)
+  - Windows-Prefetch-Verzeichnis (verbessert Systemstartzeit)
+  - Windows Update Downloads
+  - Papierkorb
+  - Internet Explorer Cache
+  - Browser-Caches (Chrome, Edge, Firefox)
+  - Kürzlich verwendete Dokumente (Recent)
+  - Windows-Miniaturansichten-Cache
 
-- **Log-Dateien bereinigen:**  
-  Automatisches Erkennen und Löschen veralteter oder fehlerhafter Log-Dateien aus System- und Anwendungsordnern.
+- **Log- und temporäre Dateien bereinigen:**  
+  ✅ Automatisches Erkennen und Löschen von:
+  - Log-Dateien (*.log)
+  - Dump-Dateien (*.dmp)
+  - Temporären Dateien (*.tmp)
+  mit intelligenter Verarbeitung in allen Windows-Verzeichnissen
+
+- **Erweiterte Sicherheitsmaßnahmen:**  
+  ✅ Integrierter Schutz kritischer Systemdateien:
+  - Schutz wichtiger Systemverzeichnisse (System32, etc.)
+  - Erhalt von .exe, .dll und .sys Dateien
+  - Intelligente Fehlerbehandlung bei in Verwendung befindlichen Dateien
 
 - **Browser-Cache und History löschen:**  
-  Unterstützung beim Entfernen von Caches, temporären Dateien und Verlaufseinträgen gängiger Browser wie Chrome, Firefox und Edge.
+  ✅ Unterstützung beim Entfernen von Caches, temporären Dateien und Verlaufseinträgen gängiger Browser wie Chrome, Firefox und Edge.
 
 ### Windows-spezifische Optimierungen
 
@@ -43,7 +61,7 @@ RustyClean bietet ein modulares Konzept, das es ermöglicht, verschiedene Aspekt
 ### Ressourcenmanagement und Überwachung
 
 - **Systemüberwachung:**  
-  Echtzeit-Überwachung von CPU-, Speicher- und Festplattennutzung. Identifiziert Engpässe und bietet Empfehlungen zur Optimierung.
+  Echtzeit-Monitoring von CPU, RAM und Festplattenbelegung
 
 - **Prozessoptimierung:**  
   Analyse der laufenden Prozesse mit Vorschlägen, welche Anwendungen oder Hintergrunddienste beendet oder priorisiert werden sollten, um die Leistung zu steigern.
@@ -106,7 +124,18 @@ RustyClean bietet ein modulares Konzept, das es ermöglicht, verschiedene Aspekt
 
 ## Funktionen
 
-- **✅ Temporäre Dateien löschen:** Bereinigt Windows-Temp-Verzeichnisse (`%TEMP%`, `C:\Windows\Temp`).
+- **✅ Erweiterte Systemreinigung:** 
+  - Bereinigung temporärer Dateien in zahlreichen Systemverzeichnissen
+  - Intelligente Reinigung von Browsercaches (Chrome, Edge, Firefox)
+  - Säuberung von Log-, Dump- und temporären Dateien
+  - Papierkorb leeren
+  - Windows Update Downloads bereinigen
+  - Löschen von Prefetch-Dateien für verbesserten Systemstart
+  - Intelligente Zugriffsverweigerungsbehandlung für mehr Stabilität
+  - Schutz kritischer Systemdateien während der Bereinigung
+
+- **✅ Systemüberwachung:** Echtzeit-Monitoring von CPU, RAM und Festplattenbelegung
+
 - *(Weitere Funktionen werden in zukünftigen Updates hinzugefügt)*
 
 ## Lizenz
