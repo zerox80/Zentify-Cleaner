@@ -289,7 +289,7 @@ impl Application for RustyCleanApp {
         }
 
         // Footer
-        let footer = row![text("© 2024 RustyClean Team").size(14)]
+        let footer = row![text("© 2025 fSN").size(14)]
             .spacing(10)
             .padding(20)
             .width(Length::Fill)

@@ -2,7 +2,7 @@
 name = "rustyclean"
 version = "0.1.0"
 edition = "2021"
-authors = ["RustyClean Team"]
+authors = ["fSN"]
 description = "Ein Windows-Optimierungstool zur Systemleistungsverbesserung"
 
 [dependencies]
