@@ -45,7 +45,7 @@ impl Application for RustyCleanApp {
     }
 
     fn title(&self) -> String {
-        String::from("RustyClean - Windows Optimierungstool")
+        String::from("ZentifyCleaner - Windows Optimierungstool")
     }
 
     fn update(&mut self, message: Message) -> Command<Message> {
