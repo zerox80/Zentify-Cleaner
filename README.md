@@ -114,3 +114,4 @@ Beiträge sind herzlich willkommen! Bitte beachte folgende Schritte:
 Dieses Projekt ist unter der MIT-Lizenz veröffentlicht. Siehe [LICENSE](LICENSE) für Details.
 
 ## Kontakt
+rujbin[at]proton[dot]me
