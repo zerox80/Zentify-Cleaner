@@ -2,7 +2,7 @@
 
 **Zentify-Cleaner** ist ein leistungsstarkes Open-Source-Tool zur Systemoptimierung für Windows, geschrieben in Rust. Mit seiner modernen GUI auf Basis des [iced](https://github.com/iced-rs/iced)-Frameworks ermöglicht der Cleaner eine einfache und effektive Bereinigung temporärer Dateien sowie die Überwachung von Systemressourcen.
 
-![Zentify-Cleaner Screenshot](assets/screenshot.png)
+![Zentify-Cleaner Screenshot](https://i.imgur.com/WN37BWD.png)
 
 ## Hauptfunktionen
 
