@@ -129,7 +129,7 @@ impl Application for RustyCleanApp {
     }
 
     fn view(&self) -> Element<Message> {
-        let header = widgets::header("RustyClean", "Windows Optimierungstool");
+        let header = widgets::header("ZentifyCleaner", "Windows Optimierungstool");
 
         // Haupt-Bereich mit Kacheln für verschiedene Funktionen
         let mut features = column![].spacing(20).width(Length::Fill);
