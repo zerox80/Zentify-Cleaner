@@ -70,7 +70,19 @@ impl Application for RustyCleanApp {
                 if self.monitoring_active {
                     // Sofort die Systemdaten laden, wenn aktiviert
                     Command::perform(
-                        async { system_info::get_system_status() },
+                        async { 
+                            match system_info::get_system_status() {
+                                Ok(status) => status,
+                                Err(_) => SystemStatus {
+                                    cpu_usage: 0.0,
+                                    memory_used: 0,
+                                    memory_total: 0,
+                                    disk_used: 0,
+                                    disk_total: 0,
+                                    top_processes: Vec::new(),
+                                }
+                            }
+                        },
                         Message::SystemStatusUpdated,
                     )
                 } else {
@@ -81,7 +93,19 @@ impl Application for RustyCleanApp {
             Message::UpdateSystemStatus => {
                 if self.monitoring_active {
                     Command::perform(
-                        async { system_info::get_system_status() },
+                        async { 
+                            match system_info::get_system_status() {
+                                Ok(status) => status,
+                                Err(_) => SystemStatus {
+                                    cpu_usage: 0.0,
+                                    memory_used: 0,
+                                    memory_total: 0,
+                                    disk_used: 0,
+                                    disk_total: 0,
+                                    top_processes: Vec::new(),
+                                }
+                            }
+                        },
                         Message::SystemStatusUpdated,
                     )
                 } else {

@@ -1,114 +1,116 @@
-# RustyClean
+# Zentify-Cleaner
 
-**RustyClean** ist ein umfassendes Open-Source-Tool zur Optimierung der Systemleistung unter Windows 11. Neben der klassischen Reinigung von temporären Dateien bietet RustyClean zahlreiche Funktionen, um Windows auf mehreren Ebenen zu optimieren – von der Bereinigung und Performance-Verbesserung über das Ressourcenmanagement bis hin zur individuellen Systemanpassung.
+**Zentify-Cleaner** ist ein leistungsstarkes Open-Source-Tool zur Systemoptimierung für Windows, geschrieben in Rust. Mit seiner modernen GUI auf Basis des [iced](https://github.com/iced-rs/iced)-Frameworks ermöglicht der Cleaner eine einfache und effektive Bereinigung temporärer Dateien sowie die Überwachung von Systemressourcen.
 
-## Überblick
-
-RustyClean bietet ein modulares Konzept, das es ermöglicht, verschiedene Aspekte der Systemoptimierung anzugehen. Es kombiniert bewährte Reinigungstechniken (wie das Entfernen temporärer Dateien, Log-Dateien und Browser-Caches) mit erweiterten Windows-spezifischen Optimierungen, um die Gesamtleistung des Systems zu steigern. Die Anwendung ist in Rust geschrieben, nutzt das moderne GUI-Framework [iced](https://github.com/iced-rs/iced) und ist als Plattform für zukünftige Erweiterungen konzipiert.
+![Zentify-Cleaner Screenshot](assets/screenshot.png)
 
 ## Hauptfunktionen
 
-### Systemreinigung
+### Implementierte Funktionen
 
-- **Temporäre Dateien löschen:**  
-  ✅ Rekursive Suche und Entfernung von temporären Dateien in `%TEMP%`, `C:\Windows\Temp` und weiteren benutzerdefinierten Ordnern.
+#### Temporäre Dateien Bereinigung ✅
+- **Umfassende Reinigung** in mehreren Systemverzeichnissen:
+  - Windows Temp-Verzeichnis
+  - Benutzer-Temp-Verzeichnis
+  - Windows Prefetch
+  - Browser-Caches (Internet Explorer, Chrome, Firefox, Edge, Brave)
+  - Windows Miniaturansichten
+  - Windows Update-Cache
 
-- **Log-Dateien bereinigen:**  
-  Automatisches Erkennen und Löschen veralteter oder fehlerhafter Log-Dateien aus System- und Anwendungsordnern.
+- **Intelligente Optionen**:
+  - Altersfilterung (nur Dateien älter als X Tage)
+  - Rekursives oder nicht-rekursives Löschen
+  - Automatisches Entfernen leerer Verzeichnisse
+  - Dateiendungs-spezifische Bereinigung
+  - Begrenzung der maximalen zu löschenden Dateien
 
-- **Browser-Cache und History löschen:**  
-  Unterstützung beim Entfernen von Caches, temporären Dateien und Verlaufseinträgen gängiger Browser wie Chrome, Firefox und Edge.
+#### Echtzeit-Systemüberwachung ✅
+- Überwachung von CPU-Auslastung, Arbeitsspeicher und Festplattennutzung
+- Anzeige der Top-Prozesse nach Ressourcenverbrauch
+- Aktualisierung in Echtzeit
 
-### Windows-spezifische Optimierungen
+### Vorteile
 
-- **Registry-Cleanup:**  
-  Analyse und sichere Bereinigung veralteter oder ungültiger Registry-Einträge, um Systemfehler zu minimieren und die Stabilität zu erhöhen.  
-  *Hinweis: Diese Funktion erfordert besondere Vorsicht und sollte nur nach Rücksprache mit dem Benutzer ausgeführt werden.*
-
-- **Autostart-Manager:**  
-  Übersicht und Verwaltung von Programmen und Diensten, die beim Systemstart automatisch geladen werden. Ermögliche das Deaktivieren unnötiger Anwendungen, um den Bootvorgang zu beschleunigen.
-
-- **Dienst- und Service-Optimierung:**  
-  Ermöglicht das Überwachen und Anpassen von Windows-Diensten. Nicht benötigte Dienste können vorübergehend deaktiviert werden, um Systemressourcen zu schonen.
-
-- **Defragmentierung und SSD-Optimierung:**  
-  Integration von Windows-eigenen Optimierungswerkzeugen zur Defragmentierung von HDDs und TRIM-Befehlen für SSDs. Zeigt Empfehlungen zur regelmäßigen Wartung an.
-
-- **Visuelle Effekte anpassen:**  
-  Bietet eine Schnittstelle, um visuelle Effekte (Animationen, Transparenzen) zu reduzieren oder anzupassen, sodass mehr Systemressourcen für wichtige Aufgaben verfügbar sind.
-
-- **Energie- und Leistungseinstellungen:**  
-  Ermöglicht das Umschalten zwischen verschiedenen Windows-Energieplänen (z. B. "Höchstleistung", "Ausbalanciert") und optimiert die Einstellungen für maximale Performance.
-
-### Ressourcenmanagement und Überwachung
-
-- **Systemüberwachung:**  
-  Echtzeit-Überwachung von CPU-, Speicher- und Festplattennutzung. Identifiziert Engpässe und bietet Empfehlungen zur Optimierung.
-
-- **Prozessoptimierung:**  
-  Analyse der laufenden Prozesse mit Vorschlägen, welche Anwendungen oder Hintergrunddienste beendet oder priorisiert werden sollten, um die Leistung zu steigern.
-
-- **Cache-Management:**  
-  Erweiterte Routinen zur Bereinigung diverser Caches, wie System-, Anwendungs- und DNS-Cache, um den Speicherplatz effizient zu nutzen.
-
-### Erweiterte Systemanpassung
-
-- **Zeitgesteuerte Reinigung:**  
-  Plane regelmäßige Reinigungs- und Optimierungsvorgänge, um das System kontinuierlich in einem optimalen Zustand zu halten.
-
-- **Detaillierte Leistungsberichte:**  
-  Erstelle vor und nach der Optimierung umfassende Berichte über Systemressourcen, verbrauchten Speicherplatz und die erreichte Performance-Verbesserung.
-
-- **Anpassbare Reinigungs- und Optimierungsprofile:**  
-  Erstelle individuelle Profile, mit denen spezifische Bereiche des Systems (wie Startprogramme, Dienste oder visuelle Effekte) gezielt optimiert werden können.
-
-- **Backup und Wiederherstellung:**  
-  Vor kritischen Operationen, wie dem Registry-Cleanup, wird ein automatisches Backup erstellt. Bei Problemen können Änderungen rückgängig gemacht werden.
-
-- **Netzwerkoptimierung:**  
-  Überwache die Netzwerkleistung und biete Optionen zur Optimierung der Netzwerkeinstellungen (z. B. TCP/IP-Konfiguration und DNS-Cache), um eine bessere Internet- und Intranet-Performance zu erzielen.
-
-- **Treiber- und Softwaremanagement:**  
-  Bietet Empfehlungen für veraltete Treiber oder Softwarekomponenten, um Kompatibilitätsprobleme zu vermeiden und die Systemstabilität zu verbessern.
-
-## Technologien
-
-- **Programmiersprache:** Rust – für hohe Performance, Systemsicherheit und Effizienz.
-- **GUI-Framework:** [iced](https://github.com/iced-rs/iced) – für eine moderne, responsive Benutzeroberfläche.
-- **Dateisystemoperationen:** Rusts Standardbibliothek sowie Crates wie [directories](https://crates.io/crates/directories) für plattformübergreifende Verzeichnisermittlung.
-- **Logging und Monitoring:** Einsatz von Crates wie `log` und `env_logger` für detaillierte Protokollierung und Diagnose.
+- **Hohe Performance**: Implementiert in Rust für schnelle Ausführung und minimalen Ressourcenverbrauch
+- **Benutzerfreundlich**: Moderne, intuitive Oberfläche 
+- **Sicher**: Intelligente Schutzfunktionen für Systemdateien
+- **Leichtgewichtig**: Minimaler Speicherbedarf
+- **Open Source**: Transparente Funktionsweise und anpassbar
 
 ## Voraussetzungen
 
-- **Betriebssystem:** Windows 11 (Administratorrechte können für bestimmte Funktionen erforderlich sein).
-- **Rust:** Aktuelle stabile Version (Installation über [rustup](https://www.rust-lang.org/tools/install)).
-- **Git:** Für das Klonen und Verwalten des Repositories.
+- **Betriebssystem**: Windows 10/11
+- **Administratorrechte**: Für volle Funktionalität empfohlen
 
 ## Installation
 
-1. **Rust und Git installieren:**  
-   Lade Rust und Git von den offiziellen Seiten herunter:
-   - [Rust Installation](https://www.rust-lang.org/tools/install)
-   - [Git Download](https://git-scm.com/downloads)
+### Vorcompilierte Version
 
-2. **Repository klonen:**  
-   Öffne eine Eingabeaufforderung oder PowerShell und führe aus:
-   ```bash
-   git clone https://github.com/dein-benutzername/rustyclean.git
-   cd rustyclean
+1. Lade die neueste Version von der [Releases-Seite](https://github.com/dein-benutzername/Zentify-Cleaner/releases) herunter
+2. Entpacke die ZIP-Datei an deinen gewünschten Ort
+3. Starte `zentify-cleaner.exe` (ggf. als Administrator)
+
+### Aus dem Quellcode
+
+1. Stelle sicher, dass [Rust](https://www.rust-lang.org/tools/install) installiert ist
+2. Klone das Repository:
    ```
-
-3. **Kompilieren und Ausführen:**
-   ```bash
+   git clone https://github.com/dein-benutzername/Zentify-Cleaner.git
+   cd Zentify-Cleaner
+   ```
+3. Kompiliere und starte das Projekt:
+   ```
    cargo build --release
    cargo run --release
    ```
 
-## Funktionen
+## Verwendung
 
-- **✅ Temporäre Dateien löschen:** Bereinigt Windows-Temp-Verzeichnisse (`%TEMP%`, `C:\Windows\Temp`).
-- *(Weitere Funktionen werden in zukünftigen Updates hinzugefügt)*
+1. Starte die Anwendung
+2. Klicke auf "Jetzt bereinigen" im Abschnitt "Temporäre Dateien"
+3. Aktiviere die Systemüberwachung mit dem entsprechenden Button
+
+## Beispiel: Benutzerdefinierte Bereinigung
+
+```rust
+// Spezifische Reinigungsoptionen erstellen
+let options = CleaningOptions {
+    min_file_age_days: 7,               // Nur Dateien älter als eine Woche
+    recursive: true,                     // Auch Unterordner bereinigen
+    remove_empty_dirs: true,             // Leere Ordner löschen
+    target_extensions: Some(vec![        // Nur bestimmte Dateiendungen löschen
+        "tmp".to_string(), 
+        "log".to_string(),
+        "bak".to_string()
+    ]),
+    max_files: 1000,                     // Maximal 1000 Dateien pro Durchgang
+};
+
+// Bereinigung mit benutzerdefinierten Optionen durchführen
+let summary = clean_temp_files_with_options(options)?;
+println!("Bereinigt: {} Dateien ({})", summary.deleted_files, summary.formatted_size());
+```
+
+## Geplante Funktionen
+
+- [ ] Browser-History-Bereinigung 
+- [ ] Autostart-Manager
+- [ ] Registry-Optimierung
+- [ ] Erweiterte Reinigungsprofile
+- [ ] Zeitgesteuerte Reinigungen
+
+## Mitwirken
+
+Beiträge sind herzlich willkommen! Bitte beachte folgende Schritte:
+
+1. Fork das Repository
+2. Erstelle einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit deine Änderungen (`git commit -m 'Add some AmazingFeature'`)
+4. Push zum Branch (`git push origin feature/AmazingFeature`)
+5. Öffne einen Pull Request
 
 ## Lizenz
 
-MIT 
+Dieses Projekt ist unter der MIT-Lizenz veröffentlicht. Siehe [LICENSE](LICENSE) für Details.
+
+## Kontakt

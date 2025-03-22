@@ -31,73 +31,106 @@ static SYSTEM: Lazy<Mutex<System>> = Lazy::new(|| {
 
 /// Initialisiert das System-Monitoring (aktualisiert einfach die Daten)
 pub fn init_monitoring() {
-    let mut sys = SYSTEM.lock().unwrap();
-    sys.refresh_all();
+    if let Ok(mut sys) = SYSTEM.lock() {
+        sys.refresh_all();
+    }
 }
 
 /// Aktualisiert die Systemdaten und gibt einen Snapshot zurück
-pub fn get_system_status() -> SystemStatus {
-    let mut sys = SYSTEM.lock().unwrap();
-    sys.refresh_all();
+pub fn get_system_status() -> Result<SystemStatus, &'static str> {
+    let mut sys_guard = match SYSTEM.lock() {
+        Ok(guard) => guard,
+        Err(_) => return Err("Konnte keine Sperre auf das System-Objekt erhalten"),
+    };
+    
+    sys_guard.refresh_all();
 
     // CPU-Auslastung berechnen (Durchschnitt aller Kerne)
-    let cpu_usage = if sys.cpus().is_empty() {
+    let cpu_usage = if sys_guard.cpus().is_empty() {
         0.0
     } else {
-        let total: f32 = sys.cpus().iter().map(|p| p.cpu_usage()).sum();
-        total / sys.cpus().len() as f32
+        let total: f32 = sys_guard.cpus().iter().map(|p| p.cpu_usage()).sum();
+        total / sys_guard.cpus().len() as f32
     };
 
-    // Arbeitsspeicher-Informationen (Bytes)
-    let memory_used = sys.used_memory() * 1024;  // Umrechnung zu Bytes
-    let memory_total = sys.total_memory() * 1024;  // Umrechnung zu Bytes
+    // Arbeitsspeicher-Informationen direkt in KB verwenden
+    let memory_used = sys_guard.used_memory();  // Direkt in KB
+    let memory_total = sys_guard.total_memory();  // Direkt in KB
 
-    // Festplatten-Informationen (nur erste Festplatte)
-    let (disk_used, disk_total) = if !sys.disks().is_empty() {
-        let disk = &sys.disks()[0];
-        // Berechnung: belegter Speicher = Gesamt - verfügbarer Speicher
-        (disk.total_space() - disk.available_space(), disk.total_space())
-    } else {
-        (0, 0)
-    };
+    // Nimm nur das Hauptlaufwerk (normalerweise C:)
+    let mut disk_used = 0;
+    let mut disk_total = 0;
+    
+    // Finde das Hauptsystemlaufwerk (i.d.R. das mit der größten Kapazität und echtem Dateisystem)
+    for disk in sys_guard.disks() {
+        let mount_point = disk.mount_point().to_string_lossy();
+        // Auf Windows ist das Systemlaufwerk typischerweise C:
+        if (mount_point.contains("C:") || mount_point.contains("/")) && disk.total_space() > 10_000_000_000 {
+            disk_used = disk.total_space() - disk.available_space();
+            disk_total = disk.total_space();
+            break; // Stoppen nach dem ersten passenden Laufwerk
+        }
+    }
+    
+    // Fallback: Nimm das größte Laufwerk, falls kein C: gefunden wurde
+    if disk_total == 0 {
+        let mut max_size = 0;
+        for disk in sys_guard.disks() {
+            if disk.total_space() > max_size && disk.total_space() < 10_000_000_000_000 {
+                max_size = disk.total_space();
+                disk_used = disk.total_space() - disk.available_space();
+                disk_total = disk.total_space();
+            }
+        }
+    }
 
     // Alle Prozesse sammeln
-    let mut processes: Vec<ProcessInfo> = sys.processes().iter().map(|(pid, process)| {
-        ProcessInfo {
+    let mut processes: Vec<ProcessInfo> = Vec::new();
+    let cpu_count = sys_guard.cpus().len() as f32;
+    
+    for (pid, process) in sys_guard.processes() {
+        processes.push(ProcessInfo {
             name: process.name().to_string(),
             pid: pid.as_u32(),
-            cpu_usage: process.cpu_usage(),
-            memory_usage: process.memory() * 1024, // Umrechnung zu Bytes
-        }
-    }).collect();
+            cpu_usage: process.cpu_usage() / cpu_count, // CPU-Nutzung durch Anzahl der Kerne teilen
+            memory_usage: process.memory(), // Speichernutzung direkt in KB ohne falsche Umrechnung
+        });
+    }
 
     // Prozesse nach CPU-Auslastung sortieren (absteigend)
-    processes.sort_by(|a, b| b.cpu_usage.partial_cmp(&a.cpu_usage).unwrap());
+    processes.sort_by(|a, b| b.cpu_usage.partial_cmp(&a.cpu_usage).unwrap_or(std::cmp::Ordering::Equal));
 
     // Top-5 Prozesse auswählen
     let top_processes = processes.into_iter().take(5).collect();
 
-    SystemStatus {
+    Ok(SystemStatus {
         cpu_usage,
         memory_used,
         memory_total,
         disk_used,
         disk_total,
         top_processes,
-    }
+    })
 }
 
 /// Formatiert Bytes in eine lesbare Größe
 pub fn format_bytes(bytes: u64) -> String {
-    const UNITS: [&str; 4] = ["B", "KB", "MB", "GB"];
+    const UNITS: [&str; 5] = ["B", "KB", "MB", "GB", "TB"];
     let mut size = bytes as f64;
     let mut unit_idx = 0;
-    
-    while size >= 1024.0 && unit_idx < 3 {
+
+    // Spezieller Fall für RAM (typischerweise in KB)
+    if bytes > 0 && bytes < 1024 * 1024 * 1024 {
+        size /= 1024.0;
+        unit_idx = 1; // KB
+    }
+
+    // Standard-Konvertierung für alle anderen Fälle (Bytes)
+    while size >= 1024.0 && unit_idx < UNITS.len() - 1 {
         size /= 1024.0;
         unit_idx += 1;
     }
-    
+
     format!("{:.2} {}", size, UNITS[unit_idx])
 }
 
