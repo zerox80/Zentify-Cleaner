@@ -46,7 +46,7 @@
 
 ### Vorcompilierte Version
 
-1. Lade die neueste Version von der [Releases-Seite](https://github.com/dein-benutzername/Zentify-Cleaner/releases) herunter
+1. Lade die neueste Version von der [Releases-Seite](https://github.com/rujbin/Zentify-Cleaner/releases) herunter
 2. Entpacke die ZIP-Datei an deinen gewünschten Ort
 3. Starte `zentify-cleaner.exe` (ggf. als Administrator)
 
