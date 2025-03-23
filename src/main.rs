@@ -7,7 +7,7 @@ fn init_windows_com() {
     // to prevent OleInitialize conflicts
     unsafe {
         windows::Win32::System::Com::CoInitializeEx(
-            std::ptr::null_mut(),
+            Some(std::ptr::null()),
             windows::Win32::System::Com::COINIT_MULTITHREADED,
         ).ok();
     }
