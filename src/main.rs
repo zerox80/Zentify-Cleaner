@@ -1,23 +1,10 @@
 use rustyclean::ui::RustyCleanApp;
 use iced::{Application, Settings};
 
-#[cfg(windows)]
-fn init_windows_com() {
-    // Initialize COM in multi-threaded mode before anything else
-    // to prevent OleInitialize conflicts
-    unsafe {
-        windows::Win32::System::Com::CoInitializeEx(
-            Some(std::ptr::null()),
-            windows::Win32::System::Com::COINIT_MULTITHREADED,
-        ).ok();
-    }
-}
-
 fn main() -> iced::Result {
-    // Initialize COM properly on Windows
-    #[cfg(windows)]
-    init_windows_com();
+    // Starte die GUI-Anwendung mit deaktiviertem Drag-and-Drop
+    let mut settings = Settings::default();
+    settings.window.platform_specific.drag_and_drop = false;
     
-    // Starte die GUI-Anwendung
-    RustyCleanApp::run(Settings::default())
+    RustyCleanApp::run(settings)
 }
