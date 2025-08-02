@@ -9,6 +9,6 @@ description = "Ein Windows-Optimierungstool zur Systemleistungsverbesserung"
 iced = { version = "0.10.0", features = ["canvas", "tokio", "image"] }
 sysinfo = "0.28.4"
 once_cell = "1.18.0"
-# Windows API für COM-Initialisierung
-windows = { version = "0.48", features = ["Win32_System_Com"] }
+# Windows API für COM-Initialisierung  
+windows = { version = "0.48", features = ["Win32_System_Com", "Win32_Foundation"] }
 # Hier können später Abhängigkeiten hinzugefügt werden
